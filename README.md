@@ -182,7 +182,7 @@ bash scripts/install-skills-pack.sh
 ```bash
 mkdir -p ~/.openclaw/workspace/skills
 cd ~/.openclaw/workspace/skills
-tar -xzf <path-to>/openclaw-skills-pack-v2026-02-25.tar.gz
+tar -xzf <path-to>/openclaw-skills-pack-v2026-03-06.tar.gz
 openclaw skills list --eligible
 ```
 

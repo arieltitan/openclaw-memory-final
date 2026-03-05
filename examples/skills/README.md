@@ -11,9 +11,14 @@ This folder contains custom OpenClaw skills used by this memory architecture wor
 - `heartbeat-ops-check.skill`
 - `trading-stack-autorepair.skill`
 
+## Release message template (new)
+
+- `release-message-template.zh-CN.md` (recommended user-facing announcement copy)
+
 ## One-file bundle
 
-- `openclaw-skills-pack-v2026-02-25.tar.gz`
+- `openclaw-skills-pack-v2026-03-06.tar.gz`
+- (legacy) `openclaw-skills-pack-v2026-02-25.tar.gz`
 
 ## Install (recommended)
 
@@ -47,6 +52,7 @@ openclaw skills list --eligible
 
 If an AI agent is applying this repository, ask it to:
 - copy `.skill` files (or extract the tarball) into `<workspace>/skills`
+- keep `release-message-template.zh-CN.md` nearby as user-facing release copy
 - run `openclaw skills list --eligible`
 - continue with memory setup flow (`scripts/install-ai.sh` + docs/ai-agent-prompt.md)
 
